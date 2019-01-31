@@ -17,8 +17,4 @@ public class Utils {
         return phone.length() == PHONE_LENGTH;
     }
 
-
-
-
-
 }
