@@ -10,14 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnLogin, btnRegister;
     EditText edTxMail, edTxPassw;
     static final int PASSW_LEN = 6;
     static final String EMAIL_KEY = "email";
 
-    // Listener sul bottone di login
     @Override
     public void onClick(View v) {
         if(v.getId()== R.id.btn_login) {
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_registrazione);
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
 
                 String email = edTxMail.getText().toString();
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = edTxMail.getText().toString();
         String password = edTxPassw.getText().toString();
 
-        if(!verifyMail(email)){
+        if(!Utils.verifyEmail(email)){
             showToast(R.string.email_invalid);
             return;
         }
@@ -66,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         showToast(R.string.login_success);
-    }
-
-    private boolean verifyMail(String email){
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void showToast(@StringRes int redId){
