@@ -9,12 +9,12 @@ public class Utils {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean isPasswordValid(String password) {
+    public static boolean verifyPassword(String password) {
         return password.length() > LEN_PASSWORD;
     }
 
-    public static boolean isPhoneValid(String phone) {
-        return phone.length() > PHONE_LENGTH;
+    public static boolean verifyPhoneNumber(String phone) {
+        return phone.length() == PHONE_LENGTH;
     }
 
 

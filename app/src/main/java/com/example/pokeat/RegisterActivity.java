@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isEmailValid = verifyEmail(s);
+                isEmailValid = Utils.verifyEmail(s.toString());
             }
 
             @Override
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isPasswordValid = verifyPassword(s);
+                isPasswordValid = Utils.verifyPassword(s.toString());
             }
 
             @Override
@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isPhoneValid = verifyPhoneNumber(s);
+                isPhoneValid = Utils.verifyPhoneNumber(s.toString());
             }
 
             @Override
@@ -81,18 +81,4 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setEnabled(isEmailValid && isPhoneValid && isPasswordValid);
     }
 
-    // Metodo per verificare l'email
-    private boolean verifyEmail(CharSequence email){
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    // Metodo per verificare la password
-    private boolean verifyPassword(CharSequence password){
-        return password.length() > PASSW_LENGTH;
-    }
-
-    // Metodo per verificare il numero di telefono
-    private boolean verifyPhoneNumber(CharSequence phoneNumber){
-        return phoneNumber.length() == PHONE_LENGTH;
-    }
 }
