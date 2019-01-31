@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="email_hint">Inserisci email</string>
+    <string name="password_hint">Inserisci password</string>
+    <string name="confirm_password_hint">Conferma password</string>
+    <string name="login_hint">Login</string>
+    <string name="register_hint">Registrati</string>
+    <string name="registration_title">Registrazione</string>
+    <string name="login_title">Login</string>
+    <string name="login_success">Login effettuato correttamente</string>
+    <string name="login_failed">Credenziali invalide</string>
+    <string name="email_invalid">Email non valida</string>
+    <string name="password_invalid">Password non valida</string>
+    <string name="btn_register_pressed">Hai premuto il tasto registrati</string>
+    <string name="phone_hint">Inserisci numero di telefono</string>
+</resources>
