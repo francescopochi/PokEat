@@ -1,15 +1,15 @@
-package ui.activities;
+package com.example.pokeat.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.pokeat.R;
 
-public class CheckoutActivity extends AppCompatActivity {
+public class ShopActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        setContentView(R.layout.activity_shop);
     }
 }

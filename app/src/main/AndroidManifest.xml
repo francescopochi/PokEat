@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="ui.activities.CheckoutActivity"></activity>
-        <activity android:name="ui.activities.MainActivity">
+        <activity android:name="com.example.pokeat.ui.activities.CheckoutActivity"></activity>
+        <activity android:name="com.example.pokeat.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ui.activities.ShopActivity" />
-        <activity android:name="ui.activities.LoginActivity">
+        <activity android:name="com.example.pokeat.ui.activities.ShopActivity" />
+        <activity android:name="com.example.pokeat.ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ui.activities.RegisterActivity" />
+        <activity android:name="com.example.pokeat.ui.activities.RegisterActivity" />
     </application>
 
 </manifest>

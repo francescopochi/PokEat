@@ -13,4 +13,5 @@
     <string name="password_invalid">Password non valida</string>
     <string name="btn_register_pressed">Hai premuto il tasto registrati</string>
     <string name="phone_hint">Inserisci numero di telefono</string>
+    <string name="login">Login</string>
 </resources>
