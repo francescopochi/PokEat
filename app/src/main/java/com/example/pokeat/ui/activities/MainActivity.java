@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
     RestaurantAdapter adapter;
     ArrayList<Restaurant> arrayList;
 
-    Restaurant restaurant1 = new Restaurant("Bussola", "Via Roma, 13 ROMA", "10.00€", "0966932317");
-    Restaurant restaurant2 = new Restaurant("Pizza Napoli", "Via Pio La Torre, 79 POLISTENA", "12.00€", "09667687654");
-    Restaurant restaurant3 = new Restaurant("Dicey's Garden", "Via Garibaldi, 122 MILANO", "8.00€", "0765435678");
-    Restaurant restaurant4 = new Restaurant("Spizzy Pizza", "Via Sandro Sandri, 79 MILANO", "9.00€", "09889897876");
-    Restaurant restaurant5 = new Restaurant("La Gardenia", "Via Pietro Nenni, 12 REGGIO CALABRIA", "5.00€", "0966932395");
+    Restaurant restaurant1 = new Restaurant("Bussola", "Via Roma, 13 ROMA", "10.00€", "0966932317", R.drawable.pizza_icon);
+    Restaurant restaurant2 = new Restaurant("Pizza Napoli", "Via Pio La Torre, 79 POLISTENA", "12.00€", "09667687654", R.drawable.mcdonald_icon);
+    Restaurant restaurant3 = new Restaurant("Dicey's Garden", "Via Garibaldi, 122 MILANO", "8.00€", "0765435678", R.drawable.burgerking_icon);
+    Restaurant restaurant4 = new Restaurant("Spizzy Pizza", "Via Sandro Sandri, 79 MILANO", "9.00€", "09889897876", R.drawable.starbucks_icon);
+    Restaurant restaurant5 = new Restaurant("La Gardenia", "Via Pietro Nenni, 12 REGGIO CALABRIA", "5.00€", "0966932395", R.drawable.pizza_icon);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

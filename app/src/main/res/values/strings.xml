@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">PokEat</string>
     <string name="email_hint">Inserisci email</string>
     <string name="password_hint">Inserisci password</string>
     <string name="confirm_password_hint">Conferma password</string>

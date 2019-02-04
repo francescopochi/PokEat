@@ -1,10 +1,12 @@
 package com.example.pokeat.ui.adapters;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Restaurant;
@@ -31,10 +33,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int pos) {
         RestaurantViewHolder vh = (RestaurantViewHolder) viewHolder;
-        vh.restaurantName.setText(data.get(pos).nome);
-        vh.restaurantAddress.setText(data.get(pos).indirizzo);
-        vh.restaurantMinPrice.setText(data.get(pos).importoMin);
-        vh.restaurantPhone.setText(data.get(pos).numTelefono);
+        vh.restaurantName.setText(data.get(pos).getNome());
+        vh.restaurantAddress.setText(data.get(pos).getIndirizzo());
+        vh.restaurantMinPrice.setText(data.get(pos).getImportoMin());
+        vh.restaurantPhone.setText(data.get(pos).getNumTelefono());
+        vh.restaurantImage.setImageResource(data.get(pos).getImage());
     }
 
     @Override
@@ -45,6 +48,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
 
         public TextView restaurantName, restaurantAddress, restaurantMinPrice, restaurantPhone;
+        public ImageView restaurantImage;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +56,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
             restaurantAddress = itemView.findViewById(R.id.address_tv);
             restaurantMinPrice = itemView.findViewById(R.id.minimumPrice_tv);
             restaurantPhone = itemView.findViewById(R.id.phone_tv);
+            restaurantImage = itemView.findViewById(R.id.image_iv);
         }
     }
 }
