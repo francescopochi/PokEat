@@ -1,4 +1,5 @@
 package com.example.pokeat.ui.activities;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import com.example.pokeat.R;
 import com.example.pokeat.Utils;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnLogin, btnRegister;
     EditText edTxMail, edTxPassw;
@@ -21,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v.getId()== R.id.btn_login) {
+        if (v.getId() == R.id.btn_login) {
             doLogin();
         }
     }
@@ -52,16 +53,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void doLogin(){
+    public void doLogin() {
 
         String email = edTxMail.getText().toString();
         String password = edTxPassw.getText().toString();
 
-        if(!Utils.verifyEmail(email)){
+        if (!Utils.verifyEmail(email)) {
             showToast(R.string.email_invalid);
             return;
         }
-        if(password.length() < PASSW_LEN){
+        if (password.length() < PASSW_LEN) {
             showToast(R.string.password_invalid);
             return;
         }
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         showToast(R.string.login_success);
     }
 
-    private void showToast(@StringRes int redId){
+    private void showToast(@StringRes int redId) {
         Toast.makeText(this, getString(redId), Toast.LENGTH_LONG).show();
     }
 
