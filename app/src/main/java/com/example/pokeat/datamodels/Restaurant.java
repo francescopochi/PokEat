@@ -1,9 +1,5 @@
 package com.example.pokeat.datamodels;
 
-import android.media.Image;
-import android.support.annotation.DrawableRes;
-import android.widget.ImageView;
-
 public class Restaurant {
 
     private String nome, indirizzo, importoMin, numTelefono;
