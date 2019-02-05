@@ -12,4 +12,10 @@
         android:id="@+id/checkout_menu"
         android:title="@string/checkout"/>
 
+    <item android:id="@+id/view_mode"
+        app:showAsAction="always"
+        android:title="GRID"
+        android:icon="@drawable/ic_grid_on_white_24dp"
+        />
+
 </menu>
