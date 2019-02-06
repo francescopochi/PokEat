@@ -9,9 +9,9 @@ public class Restaurant {
 
     public Restaurant(String nome, String indirizzo, String importoMin, String numTelefono, int image){
         this.nome = nome;
-        this.indirizzo = "Indirizzo: " + indirizzo;
-        this.importoMin = "Importo minimo: " + importoMin;
-        this.numTelefono = "Telefono: " + numTelefono;
+        this.indirizzo = indirizzo;
+        this.importoMin = "Min. ordine: " + importoMin;
+        this.numTelefono = numTelefono;
         this.image = image;
     }
 

@@ -99,7 +99,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
 
                 v.getContext().startActivity(intent);
             }
-
         }
     }
 
