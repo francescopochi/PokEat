@@ -7,9 +7,10 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="15dp">
+        android:paddingTop="15dp"
+        android:id="@+id/header">
 
         <ImageView
             android:layout_width="100dp"
@@ -27,46 +28,70 @@
             android:layout_gravity="center"
             android:textSize="30dp"
             android:layout_toRightOf="@id/img"
+            android:layout_marginBottom="5dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/img"
-            android:layout_below="@id/img"
+            android:layout_below="@id/restaurant_name"
             android:id="@+id/restaurant_address2"
-            android:paddingStart="10dp"
+            android:layout_alignStart="@id/restaurant_name"
+            android:layout_marginBottom="5dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/restaurant_address2"
-            android:id="@+id/minimum_order"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/rounded_corner"
-            android:textColor="@color/cardview_light_background"
-            android:layout_alignStart="@id/restaurant_address2"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"/>
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_place_black_24dp"
+            android:layout_alignBottom="@id/restaurant_name"
+            android:layout_marginEnd="35dp"
+            android:id="@+id/position_img"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restaurant_phone2"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@id/minimum_order"
-            android:layout_below="@+id/minimum_order"
+            android:layout_below="@+id/restaurant_address2"
             android:background="@drawable/rounded_corner"
             android:textColor="@color/cardview_light_background"
             android:padding="5dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_alignStart="@id/restaurant_address2"/>
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="10dp">
+        android:orientation="vertical"
+        android:layout_below="@+id/header"
+        android:background="@drawable/background_border"
+        android:id="@+id/footer"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/my_progressBar"
+            android:text="@string/checkout_total"
+            android:layout_above="@id/my_progressBar"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/total_tv"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/minimum_order"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/cardview_light_background"
+            android:padding="5dp"
+            android:layout_alignBaseline="@id/total_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"/>
+
 
         <ProgressBar
             android:id="@+id/my_progressBar"
@@ -75,9 +100,20 @@
             android:layout_height="10dp"
             android:indeterminate="false"
             android:max="100"
-            android:progress="45"/>
+            android:progress="45"
+            android:padding="30dp"
+            android:layout_above="@id/checkout_btn"
+            />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/checkout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CHECKOUT"
+            android:layout_alignParentBottom="true"
+            android:enabled="false"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
 

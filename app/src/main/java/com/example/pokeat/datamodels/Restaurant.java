@@ -1,7 +1,5 @@
 package com.example.pokeat.datamodels;
 
-import android.widget.Button;
-
 public class Restaurant {
 
     private String nome, indirizzo, importoMin, numTelefono;

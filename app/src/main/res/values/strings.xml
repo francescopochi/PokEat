@@ -18,4 +18,5 @@
     <string name="restaurant_list">Elenco ristoranti</string>
     <string name="checkout_title">Checkout</string>
     <string name="menu">Vedi menu</string>
+    <string name="checkout_total">Totale: </string>
 </resources>

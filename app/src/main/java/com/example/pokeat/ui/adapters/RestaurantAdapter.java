@@ -63,6 +63,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         vh.restaurantMinPrice.setText(data.get(pos).getImportoMin());
         vh.restaurantPhone.setText(data.get(pos).getNumTelefono());
         vh.restaurantImage.setImageResource(data.get(pos).getImage());
+
+        vh.imgSrc = data.get(pos).getImage();
     }
 
     @Override
@@ -75,6 +77,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         public TextView restaurantName, restaurantAddress, restaurantMinPrice, restaurantPhone;
         public ImageView restaurantImage;
         public Button vediMenuBtn;
+        public int imgSrc;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +99,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
                 intent.putExtra("restaurant_address", restaurantAddress.getText().toString());
                 intent.putExtra("restaurant_min_price", restaurantMinPrice.getText().toString());
                 intent.putExtra("restaurant_phone", restaurantPhone.getText().toString());
+                intent.putExtra("restaurant_img_src", imgSrc);
 
                 v.getContext().startActivity(intent);
             }
