@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
+import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.ui.activities.LoginActivity;
 import com.example.pokeat.ui.activities.RegisterActivity;

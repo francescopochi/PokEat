@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pokeat.R;
+import com.example.pokeat.datamodels.Product;
+import com.example.pokeat.ui.adapters.ProductAdapter;
+import com.example.pokeat.ui.adapters.RestaurantAdapter;
+
+import java.util.ArrayList;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,13 +25,41 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     TextView restaurantTitleTv,  restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv;
     ImageView restaurantImg, locationImg;
 
+    RecyclerView productsRV;
+    RecyclerView.LayoutManager layoutManager;
+    ProductAdapter adapter;
     int imgSrc;
+    ArrayList<Product> productsArrayList;
+
+    public ArrayList<Product> getProducts(){
+        productsArrayList = new ArrayList<>();
+
+        productsArrayList.add(new Product("Hamburger", 2.00f));
+        productsArrayList.add(new Product("Pizza", 4.3f));
+        productsArrayList.add(new Product("Calzone", 3.50f));
+        productsArrayList.add(new Product("Spaghetti", 6.00f));
+        productsArrayList.add(new Product("Bistecca alla Fiorentina", 12.50f));
+        productsArrayList.add(new Product("Carbonara", 7.50f));
+        productsArrayList.add(new Product("Insalata mista", 4.50f));
+        productsArrayList.add(new Product("Petto di pollo", 8.00f));
+        productsArrayList.add(new Product("Polenta", 5.00f));
+        productsArrayList.add(new Product("Verdure miste", 4.00f));
+
+        return productsArrayList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         intent = getIntent();
+
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ProductAdapter(this, getProducts());
+
+        productsRV = findViewById(R.id.products_rv);
+        productsRV.setLayoutManager(layoutManager);
+        productsRV.setAdapter(adapter);
 
         restaurantTitleTv = findViewById(R.id.restaurant_name);
         restaurantAddressTv = findViewById(R.id.restaurant_address2);

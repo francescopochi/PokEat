@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.pokeat.R;
+import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
 
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(restaurant3);
         arrayList.add(restaurant4);
         arrayList.add(restaurant5);
-
 
         return arrayList;
     }

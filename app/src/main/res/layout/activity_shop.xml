@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingTop="15dp"
-        android:id="@+id/header">
+        android:id="@+id/header"
+        android:paddingBottom="10dp"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:layout_width="100dp"
@@ -61,13 +61,20 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/header"
-        android:background="@drawable/background_border"
+        android:id="@+id/products_rv"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
         android:id="@+id/footer"
+        android:background="@drawable/background_border"
         >
 
         <TextView
@@ -77,7 +84,7 @@
             android:text="@string/checkout_total"
             android:layout_above="@id/my_progressBar"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/total_tv"/>
 
 
@@ -90,7 +97,7 @@
             android:padding="5dp"
             android:layout_alignBaseline="@id/total_tv"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"/>
+            android:layout_marginEnd="20dp"/>
 
 
         <ProgressBar
@@ -101,7 +108,7 @@
             android:indeterminate="false"
             android:max="100"
             android:progress="45"
-            android:padding="30dp"
+            android:padding="20dp"
             android:layout_above="@id/checkout_btn"
             />
 

@@ -52,4 +52,5 @@ public class Restaurant {
     public void setImage(int image) {
         this.image = image;
     }
+
 }
