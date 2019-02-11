@@ -35,4 +35,17 @@ public class Product {
     public void setQuantita(int quantita) {
         this.quantita = quantita;
     }
+
+    public void increaseQuantity(){
+        this.quantita++;
+    }
+    public void decreaseQuantity(){
+        if(quantita == 0) return;
+        this.quantita--;
+    }
+
+    public float getSubtotal(){
+        return quantita * prezzo;
+    }
+
 }

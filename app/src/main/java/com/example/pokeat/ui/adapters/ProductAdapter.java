@@ -1,5 +1,4 @@
 package com.example.pokeat.ui.adapters;
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -7,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
@@ -24,6 +25,20 @@ public class ProductAdapter extends RecyclerView.Adapter{
         inflater = LayoutInflater.from(context);
         this.data = data;
     }
+
+    public interface OnQuanityChangedListener {
+        void onChange(float price);
+    }
+
+    public OnQuanityChangedListener getOnQuanityChangedListener() {
+        return onQuanityChangedListener;
+    }
+
+    public void setOnQuanityChangedListener(OnQuanityChangedListener onQuanityChangedListener) {
+        this.onQuanityChangedListener = onQuanityChangedListener;
+    }
+
+    private OnQuanityChangedListener onQuanityChangedListener;
 
     @NonNull
     @Override
@@ -47,15 +62,44 @@ public class ProductAdapter extends RecyclerView.Adapter{
         return data.size();
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder {
+    public class ProductViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
         public TextView foodName, foodPrice, foodQuantity;
+        public Button plusBtn, minusBtn;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.foodName_tv);
             foodPrice = itemView.findViewById(R.id.foodPrice_tv);
             foodQuantity = itemView.findViewById(R.id.foodQuantity_tv);
+
+            plusBtn = itemView.findViewById(R.id.quantityPlus_btn);
+            minusBtn = itemView.findViewById(R.id.quantityMinus_btn);
+            plusBtn.setOnClickListener(this);
+            minusBtn.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            Product product = data.get(getAdapterPosition());
+
+            if (view.getId() == R.id.quantityPlus_btn) {
+                product.increaseQuantity();
+                notifyItemChanged(getAdapterPosition());
+                onQuanityChangedListener.onChange(product.getPrezzo());
+            } else if (view.getId() == R.id.quantityMinus_btn) {
+
+                if(product.getQuantita()>0){
+                    product.decreaseQuantity();
+                    notifyItemChanged(getAdapterPosition());
+                    onQuanityChangedListener.onChange(product.getPrezzo() * -1);
+                } else {
+                    Toast.makeText(view.getContext(), "aggiungi almeno un elemento ", Toast.LENGTH_LONG);
+                }
+
+
+            }
+        }
+
     }
 }

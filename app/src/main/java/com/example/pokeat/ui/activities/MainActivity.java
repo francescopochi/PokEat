@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String preferenceKEY = "view_mode";
     SharedPreferences sharedPreferences;
 
-    Restaurant restaurant1 = new Restaurant("Bussola", "Via Roma, 13 ROMA", "10.00€", "0966932317", R.drawable.pizza_icon);
-    Restaurant restaurant2 = new Restaurant("Mc Donald's", "Via Tiburtina, 79 ROMA", "12.00€", "09667687654", R.drawable.mcdonald_icon);
-    Restaurant restaurant3 = new Restaurant("Burger King", "Via Garibaldi, 122 MILANO", "8.00€", "0765435678", R.drawable.burgerking_icon);
-    Restaurant restaurant4 = new Restaurant("Starbucks", "Via Sandro Sandri, 79 MILANO", "9.00€", "09889897876", R.drawable.starbucks_icon);
-    Restaurant restaurant5 = new Restaurant("La Gardenia", "Via Pietro Nenni, 12 REGGIO CALABRIA", "5.00€", "0966932395", R.drawable.pizza_icon);
+    Restaurant restaurant1 = new Restaurant("Bussola", "Via Roma, 13 ROMA", "10", "0966932317", R.drawable.pizza_icon);
+    Restaurant restaurant2 = new Restaurant("Mc Donald's", "Via Tiburtina, 79 ROMA", "12", "09667687654", R.drawable.mcdonald_icon);
+    Restaurant restaurant3 = new Restaurant("Burger King", "Via Garibaldi, 122 MILANO", "8", "0765435678", R.drawable.burgerking_icon);
+    Restaurant restaurant4 = new Restaurant("Starbucks", "Via Sandro Sandri, 79 MILANO", "9", "09889897876", R.drawable.starbucks_icon);
+    Restaurant restaurant5 = new Restaurant("La Gardenia", "Via Pietro Nenni, 12 REGGIO CALABRIA", "5", "0966932395", R.drawable.pizza_icon);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
