@@ -4,12 +4,17 @@ public class Product {
 
     private String nome;
     private float prezzo;
-    private int quantita;
+    private int quantita = 0;
+
+    public Product(String nome, float prezzo, int quantita) {
+        this.nome = nome;
+        this.prezzo = prezzo;
+        this.quantita = quantita;
+    }
 
     public Product(String nome, float prezzo) {
         this.nome = nome;
         this.prezzo = prezzo;
-        this.quantita = 0;
     }
 
     public String getNome() {

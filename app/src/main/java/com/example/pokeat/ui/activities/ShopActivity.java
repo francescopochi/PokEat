@@ -95,6 +95,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         restaurantMinPriceTv.append(restaurantMinPrice);
 
         locationImg.setOnClickListener(this);
+        restaurantPhoneTv.setOnClickListener(this);
     }
 
     @Override
@@ -104,6 +105,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         } else if(v.getId() == R.id.checkout_btn){
             Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
             intent.putExtra("restaurant_name", restaurantName);
+            startActivity(intent);
+        } else if(v.getId() == R.id.restaurant_phone2){
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", restaurantPhone, null));
             startActivity(intent);
         }
     }
@@ -117,7 +121,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateTotal(float item){
         total = total + item;
-        totalTv.setText("Total: ".concat(String.valueOf(total)));
+        totalTv.setText("Totale: ".concat(String.valueOf(total)));
     }
 
     private void updateProgress(int progress){

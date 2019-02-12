@@ -1,5 +1,7 @@
 package com.example.pokeat.ui.activities;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +15,23 @@ import com.example.pokeat.ui.adapters.OrderProductsAdapter;
 import com.example.pokeat.ui.adapters.ProductAdapter;
 
 import java.util.ArrayList;
+public class CheckoutActivity extends AppCompatActivity implements OrderProductsAdapter.OnTotalChangedListener {
 
-public class CheckoutActivity extends AppCompatActivity {
+    @Override
+    public void onChange(int id) {
+        order.productsArrayList.remove(id);
+        totalTv.setText("" + order.calcolaTotale());
+    }
 
     Intent intent;
-    TextView restaurantTitle;
+    TextView restaurantTitle, totalTv;
     RecyclerView.LayoutManager layoutManager;
     OrderProductsAdapter adapter;
     RecyclerView ordersRV;
+    private float total = 0f;
+    ArrayList<Product> productsArrayList;
+    Order order = new Order(getProducts(), "McDonald's");
 
-    ArrayList<Order> ordersArrayList;
-    public ArrayList<Product> productsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,36 +42,26 @@ public class CheckoutActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         adapter = new OrderProductsAdapter(this, getProducts());
+        adapter.setOnTotalChangedListener(this);
 
         ordersRV = findViewById(R.id.orders_rv);
+        totalTv = findViewById(R.id.checkout_total);
         ordersRV.setLayoutManager(layoutManager);
         ordersRV.setAdapter(adapter);
 
         restaurantTitle = findViewById(R.id.restaurant_name_final);
         restaurantTitle.append(intent.getStringExtra("restaurant_name"));
 
-    }
-
-    private ArrayList<Order> getOrders(){
-            ordersArrayList = new ArrayList<>();
-            Order order1 = new Order(getProducts(), intent.getStringExtra("restaurant_name"));
-            ordersArrayList.add(order1);
-            return ordersArrayList;
+        totalTv.setText("" + order.calcolaTotale());
     }
 
     private ArrayList<Product> getProducts(){
         productsArrayList = new ArrayList<>();
 
-        productsArrayList.add(new Product("Hamburger", 2f));
-        productsArrayList.add(new Product("Pizza", 4.3f));
-        productsArrayList.add(new Product("Calzone", 3.5f));
-        productsArrayList.add(new Product("Spaghetti", 6f));
-        productsArrayList.add(new Product("Bistecca alla Fiorentina", 12.5f));
-        productsArrayList.add(new Product("Carbonara", 7.5f));
-        productsArrayList.add(new Product("Insalata mista", 4.5f));
-        productsArrayList.add(new Product("Petto di pollo", 8f));
-        productsArrayList.add(new Product("Polenta", 5f));
-        productsArrayList.add(new Product("Verdure miste", 4f));
+        productsArrayList.add(new Product("Hamburger", 2f,3));
+        productsArrayList.add(new Product("Pizza", 4.3f,1));
+        productsArrayList.add(new Product("Calzone", 3.5f,5));
+        productsArrayList.add(new Product("Spaghetti", 6f,2));
 
         return productsArrayList;
     }

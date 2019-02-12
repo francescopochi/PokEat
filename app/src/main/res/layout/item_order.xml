@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:id="@+id/subtotal"
+        android:textStyle="bold"
         android:layout_alignBaseline="@+id/item_name"/>
 
     <ImageButton
@@ -43,8 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/remove_item_button"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_highlight_off_black_24dp"
-        android:backgroundTint="@color/cardview_light_background"
+        android:background="@drawable/ic_highlight_off_black_24dp"
         />
 
 </RelativeLayout>

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,8 +27,8 @@
                 android:id="@+id/foodPrice_tv"
                 android:layout_marginTop="10dp"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/quantityOptionsContainer"
@@ -37,9 +36,8 @@
 
                 <Button
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:text="-"
-                    android:layout_alignBaseline="@id/foodQuantity_tv"
                     android:id="@+id/quantityMinus_btn"
                     android:layout_alignParentStart="true"
                     />
@@ -47,16 +45,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/foodQuantity_tv"
-                    android:layout_marginHorizontal="5dp"/>
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_centerInParent="true"/>
                 <Button
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:text="+"
-                    android:layout_alignBaseline="@id/foodQuantity_tv"
                     android:id="@+id/quantityPlus_btn"
                     android:layout_alignParentEnd="true"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </RelativeLayout>

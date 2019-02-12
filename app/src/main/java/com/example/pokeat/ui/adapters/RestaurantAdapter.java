@@ -65,7 +65,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         vh.restaurantPhone.setText(data.get(pos).getNumTelefono());
         vh.restaurantImage.setImageResource(data.get(pos).getImage());
 
-        vh.imgSrc = data.get(pos).getImage();
+        vh.imgSrc = data.get(pos).getImage(); 
     }
 
     @Override

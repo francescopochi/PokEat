@@ -11,7 +11,6 @@
         android:id="@+id/header"
         android:paddingBottom="10dp"
         android:layout_alignParentTop="true"
-
         >
 
         <ImageView
@@ -31,6 +30,7 @@
             android:textSize="30dp"
             android:layout_toRightOf="@id/img"
             android:layout_marginBottom="5dp"
+            android:textStyle="bold"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -93,8 +93,8 @@
                 android:text="@string/checkout_total"
                 android:layout_above="@id/my_progressBar"
                 android:id="@+id/total_tv"
+                android:textStyle="bold"
                 />
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                 android:layout_alignBaseline="@+id/minimum_order"
                 android:text="@string/importo_minimo"
                 android:layout_toLeftOf="@+id/minimum_order"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="3dp"/>
 
             <TextView
                 android:layout_width="wrap_content"

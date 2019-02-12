@@ -89,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.login_menu) {
             startActivity(new Intent(this, LoginActivity.class));
             return true;
-        } else if (item.getItemId() == R.id.checkout_menu) {
-            startActivity(new Intent(this, CheckoutActivity.class));
-            return true;
         } else if(item.getItemId() == R.id.view_mode){
             setLayoutManager();
             item.setIcon(RestaurantAdapter.getIsGrid() ? R.drawable.ic_grid_off_white_24dp : R.drawable.ic_grid_on_white_24dp);

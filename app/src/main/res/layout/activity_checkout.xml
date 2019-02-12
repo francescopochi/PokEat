@@ -12,15 +12,17 @@
         android:layout_height="wrap_content"
         android:text="@string/checkout_title"
         android:id="@+id/checkout_title"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/restaurant_name_final"
         android:layout_below="@id/checkout_title"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:layout_marginTop="10dp"
+        android:textStyle="italic"
         />
 
     <android.support.v7.widget.RecyclerView
@@ -30,11 +32,29 @@
         android:layout_below="@id/restaurant_name_final"
         android:layout_above="@id/pay_btn"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pay_btn"
+        android:text="@string/checkout_total"
+        android:layout_marginEnd="2dp"
+        android:id="@id/tot"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pay_btn"
+        android:id="@+id/checkout_total"
+        android:layout_toRightOf="@+id/tot"
+        android:textStyle="bold"
+        />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="PROCEDI AL PAGAMENTO"
+        android:text="@string/proceed_payment"
         android:id="@+id/pay_btn"
         />
 

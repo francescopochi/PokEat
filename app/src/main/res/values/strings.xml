@@ -21,5 +21,6 @@
     <string name="checkout_total">Totale: </string>
     <string name="importo_minimo">Importo minimo: </string>
     <string name="eur">€</string>
+    <string name="proceed_payment">PROCEDI COL PAGAMENTO</string>
 
 </resources>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Order {
 
     private String restaurantName;
-    private ArrayList<Product> productsArrayList;
+    public ArrayList<Product> productsArrayList;
     private float total;
 
     public Order(ArrayList<Product> products, String restaurantName){
@@ -19,10 +19,6 @@ public class Order {
         productsArrayList.add(new Product("Pizza", 4.3f));
         productsArrayList.add(new Product("Calzone", 3.5f));
         productsArrayList.add(new Product("Spaghetti", 6f));
-        productsArrayList.add(new Product("Bistecca alla Fiorentina", 12.5f));
-        productsArrayList.add(new Product("Carbonara", 7.5f));
-        productsArrayList.add(new Product("Insalata mista", 4.5f));
-        productsArrayList.add(new Product("Petto di pollo", 8f));
         productsArrayList.add(new Product("Polenta", 5f));
         productsArrayList.add(new Product("Verdure miste", 4f));
 
@@ -43,5 +39,14 @@ public class Order {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public float calcolaTotale(){
+        total = 0;
+        for(Product elem : productsArrayList){
+            total += elem.getSubtotal();
+        }
+
+        return total;
     }
 }
