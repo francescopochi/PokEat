@@ -1,8 +1,11 @@
 package com.example.pokeat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Restaurant {
 
-    private String nome, indirizzo, importoMin, numTelefono;
+    private String nome, indirizzo, importoMin, numTelefono, imageUrl;
     private int image;
 
     public Restaurant(String nome, String indirizzo, String importoMin, String numTelefono, int image){
@@ -11,6 +14,13 @@ public class Restaurant {
         this.importoMin = importoMin;
         this.numTelefono = numTelefono;
         this.image = image;
+    }
+
+    public Restaurant(JSONObject jsonRestaurant) throws JSONException {
+        nome = jsonRestaurant.getString("name");
+        indirizzo = jsonRestaurant.getString("address");
+        importoMin = jsonRestaurant.getString("min_order");
+        imageUrl = jsonRestaurant.getString("image_url");
     }
 
     public String getNumTelefono() {
