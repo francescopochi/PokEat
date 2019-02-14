@@ -42,9 +42,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         isGrid = !isGrid;
     }
 
-    public RestaurantAdapter(Context context, ArrayList<Restaurant> data){
+    public RestaurantAdapter(Context context){
         inflater = LayoutInflater.from(context);
-        this.data = data;
+        this.data = new ArrayList<>();
     }
 
     @NonNull
@@ -61,11 +61,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         RestaurantViewHolder vh = (RestaurantViewHolder) viewHolder;
         vh.restaurantName.setText(data.get(pos).getNome());
         vh.restaurantAddress.setText(data.get(pos).getIndirizzo());
-        vh.restaurantMinPrice.setText(data.get(pos).getImportoMin());
+        vh.restaurantMinPrice.setText(String.valueOf(data.get(pos).getImportoMin()));
         vh.restaurantPhone.setText(data.get(pos).getNumTelefono());
-        vh.restaurantImage.setImageResource(data.get(pos).getImage());
-
-        vh.imgSrc = data.get(pos).getImage(); 
+        Glide.with(vh.itemView).load(data.get(pos).getImageUrl()).into(vh.restaurantImage);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
 
     public void setData(ArrayList<Restaurant> data) {
         this.data = data;
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // notifichiamo all'adapter che è cambiato il dataset
     }
 
     public class RestaurantViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
@@ -83,7 +81,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         public TextView restaurantName, restaurantAddress, restaurantMinPrice, restaurantPhone;
         public ImageView restaurantImage;
         public Button vediMenuBtn;
-        public int imgSrc;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,11 +98,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         public void onClick(View v) {
             if(v.getId() == R.id.vediMenu_btn){
                 Intent intent = new Intent(v.getContext(), ShopActivity.class);
-                intent.putExtra("restaurant_name", restaurantName.getText().toString());
-                intent.putExtra("restaurant_address", restaurantAddress.getText().toString());
-                intent.putExtra("restaurant_min_price", restaurantMinPrice.getText().toString());
-                intent.putExtra("restaurant_phone", restaurantPhone.getText().toString());
-                intent.putExtra("restaurant_img_src", imgSrc);
+                intent.putExtra("restaurant_id",getAdapterPosition());
 
                 v.getContext().startActivity(intent);
             }

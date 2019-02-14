@@ -13,29 +13,42 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
+import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.ui.adapters.ProductAdapter;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener, ProductAdapter.OnQuanityChangedListener {
 
     Intent intent;
-    String restaurantName, restaurantAddress, restaurantPhone, restaurantMinPrice;
+    String restaurantName, restaurantAddress, restaurantPhone, restaurantImgSrc;
+    float restaurantMinPrice;
     TextView restaurantTitleTv,  restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv, totalTv;
     ImageView restaurantImg, locationImg;
     ProgressBar progressBar;
     Button checkoutBtn;
-
     private float total = 0f;
 
     RecyclerView productsRV;
     RecyclerView.LayoutManager layoutManager;
     ProductAdapter adapter;
-    int imgSrc;
+    Restaurant restaurant;
     public ArrayList<Product> productsArrayList;
+    int restaurant_id;
 
     public ArrayList<Product> getProducts(){
         productsArrayList = new ArrayList<>();
@@ -80,19 +93,51 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         checkoutBtn.setOnClickListener(this);
 
-        restaurantName = intent.getStringExtra("restaurant_name");
-        restaurantAddress = intent.getStringExtra("restaurant_address");
-        restaurantPhone = intent.getStringExtra("restaurant_phone");
-        restaurantMinPrice = intent.getStringExtra("restaurant_min_price");
-        imgSrc = intent.getIntExtra("restaurant_img_src", R.drawable.ic_image_black_24dp);
+        restaurant_id = intent.getIntExtra("restaurant_id", -1);
 
-        progressBar.setMax(Integer.parseInt(restaurantMinPrice)*100);
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://5c642463c969210014a32e05.mockapi.io/api/v1/restaurant/" + (restaurant_id+1) + "";
 
-        restaurantImg.setImageResource(imgSrc);
-        restaurantTitleTv.append(restaurantName);
-        restaurantAddressTv.append(restaurantAddress);
-        restaurantPhoneTv.append(restaurantPhone);
-        restaurantMinPriceTv.append(restaurantMinPrice);
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET, // HTTP request method
+                url,   // Destination
+                new Response.Listener<String>() {   // Listener for successful response
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("MAINACTIVIY", response);
+                        //Parsing
+                        try{
+                            JSONObject restaurantJSON = new JSONObject(response);
+                            restaurant= new Restaurant(restaurantJSON);
+
+                            restaurantPhone = restaurant.getNumTelefono();
+                            restaurantName = restaurant.getNome();
+                            restaurantMinPrice = restaurant.getImportoMin();
+                            restaurantAddress = restaurant.getIndirizzo();
+                            restaurantImgSrc = restaurant.getImageUrl();
+
+                            restaurantTitleTv.setText(restaurantName);
+                            restaurantAddressTv.setText(restaurantAddress);
+                            restaurantPhoneTv.setText(restaurantPhone);
+                            restaurantMinPriceTv.setText(String.valueOf(restaurantMinPrice));
+                            Glide.with(ShopActivity.this).load(restaurantImgSrc).into(restaurantImg);
+                            progressBar.setMax((int)(restaurantMinPrice)*100);
+                        } catch (JSONException e){
+                            Log.i("SHOPACTIVYTY", e.getMessage());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {  // Listener for error response
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SHOPACTIVYTY", error.getMessage() + " " + error.networkResponse.statusCode);
+                    }
+                }
+        );
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
         locationImg.setOnClickListener(this);
         restaurantPhoneTv.setOnClickListener(this);

@@ -14,40 +14,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.request.Request;
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
+import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
 
     RecyclerView restaurantRV;
     RecyclerView.LayoutManager layoutManager;
     RestaurantAdapter adapter;
-    ArrayList<Restaurant> arrayList;
-
-    private static final String preferencesFile = "com.example.pokeat.mypreferences";
-    private static final String preferenceKEY = "view_mode";
+    ArrayList<Restaurant> restaurantsArrayList = new ArrayList<>();
+    private RestController restController;
+    private static final String preferencesFile = "com.example.pokeat.mypreferences", preferenceKEY = "view_mode";
     SharedPreferences sharedPreferences;
-
-    Restaurant restaurant1 = new Restaurant("Bussola", "Via Roma, 13 ROMA", "10", "0966932317", R.drawable.pizza_icon);
-    Restaurant restaurant2 = new Restaurant("Mc Donald's", "Via Tiburtina, 79 ROMA", "12", "09667687654", R.drawable.mcdonald_icon);
-    Restaurant restaurant3 = new Restaurant("Burger King", "Via Garibaldi, 122 MILANO", "8", "0765435678", R.drawable.burgerking_icon);
-    Restaurant restaurant4 = new Restaurant("Starbucks", "Via Sandro Sandri, 79 MILANO", "9", "09889897876", R.drawable.starbucks_icon);
-    Restaurant restaurant5 = new Restaurant("La Gardenia", "Via Pietro Nenni, 12 REGGIO CALABRIA", "5", "0966932395", R.drawable.pizza_icon);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,71 +52,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         restaurantRV = findViewById(R.id.places_rv);
 
+        // Otteniamo eventuali dati di preferences
         sharedPreferences = getSharedPreferences(preferencesFile, MODE_PRIVATE);
         RestaurantAdapter.setGrid(sharedPreferences.getBoolean(preferenceKEY, false));
 
         // Creiamo LayourManager e Adapter
-        if(RestaurantAdapter.getIsGrid()){
-            layoutManager = new GridLayoutManager(this,2);
+        if (RestaurantAdapter.getIsGrid()) {
+            layoutManager = new GridLayoutManager(this, 2);
         } else {
             layoutManager = new LinearLayoutManager(this);
         }
-        adapter = new RestaurantAdapter(this, getData());
+        adapter = new RestaurantAdapter(this);
 
         // Colleghiamo al RecycleView il suo layoutManager e Adapter
         restaurantRV.setLayoutManager(layoutManager);
         restaurantRV.setAdapter(adapter);
 
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://5ba19290ee710f0014dd764c.mockapi.io/api/v1/restaurant";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, // HTTP request method
-                url,   // Destination
-                new Response.Listener<String>() {   // Listener for successful response
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("MAINACTIVIY", response);
-
-                        //Parsing
-                        try{
-                            JSONArray restaurantJsonArray = new JSONArray(response);
-                            for(int i=0; i<restaurantJsonArray.length(); i++){
-                                Restaurant restaurant = new Restaurant(restaurantJsonArray.getJSONObject(i));
-                                arrayList.add(restaurant);
-                            }
-                            adapter.setData(arrayList);
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {  // Listener for error response
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("MAINACTIVIY", error.getMessage() + " " + error.networkResponse.statusCode);
-                    }
-                }
-        );
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
-
-    // Metodo per riempire l'arraylist
-    private ArrayList<Restaurant> getData(){
-        arrayList = new ArrayList<>();
-
-        arrayList.add(restaurant1);
-        arrayList.add(restaurant2);
-        arrayList.add(restaurant3);
-        arrayList.add(restaurant4);
-        arrayList.add(restaurant5);
-
-        return arrayList;
+        restController = new RestController(this);
+        restController.getRequest(Restaurant.ENDPOINT, this, this);
     }
 
     @Override
@@ -158,5 +107,28 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(preferenceKEY, RestaurantAdapter.getIsGrid());
         editor.apply();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try{
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i=0; i<jsonArray.length(); i++){
+                Restaurant restaurant = new Restaurant(jsonArray.getJSONObject(i));
+                restaurantsArrayList.add(restaurant);
+            }
+            adapter.setData(restaurantsArrayList);
+
+        } catch (JSONException je){
+            Log.e("MAINACTIVITY", je.getMessage());
+            Toast.makeText(this, je.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("MAINACTIVITY", error.getMessage());
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

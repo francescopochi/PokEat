@@ -1,26 +1,28 @@
 package com.example.pokeat.datamodels;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Restaurant {
 
-    private String nome, indirizzo, importoMin, numTelefono, imageUrl;
-    private int image;
-
-    public Restaurant(String nome, String indirizzo, String importoMin, String numTelefono, int image){
-        this.nome = nome;
-        this.indirizzo = indirizzo;
-        this.importoMin = importoMin;
-        this.numTelefono = numTelefono;
-        this.image = image;
-    }
+    private String nome, indirizzo, numTelefono, imageUrl, id;
+    private Float importoMin;
+    public static final String ENDPOINT = "restaurants";
 
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {
         nome = jsonRestaurant.getString("name");
         indirizzo = jsonRestaurant.getString("address");
-        importoMin = jsonRestaurant.getString("min_order");
+        importoMin = (float)jsonRestaurant.getDouble("min_order");
         imageUrl = jsonRestaurant.getString("image_url");
+        numTelefono = jsonRestaurant.getString("phone_number");
+        id = jsonRestaurant.getString("id");
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getNumTelefono() {
@@ -47,20 +49,12 @@ public class Restaurant {
         this.indirizzo = indirizzo;
     }
 
-    public String getImportoMin() {
+    public float getImportoMin() {
         return importoMin;
     }
 
-    public void setImportoMin(String importoMin) {
+    public void setImportoMin(float importoMin) {
         this.importoMin = importoMin;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
 }
