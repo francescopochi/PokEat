@@ -11,27 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.adapters.ProductAdapter;
-import com.example.pokeat.ui.adapters.RestaurantAdapter;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener, ProductAdapter.OnQuanityChangedListener, Response.Listener<String>, Response.ErrorListener  {
@@ -39,35 +31,19 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent;
     String restaurantId, restaurantName, restaurantAddress, restaurantPhone, restaurantImgSrc;
     float restaurantMinPrice;
-    TextView restaurantTitleTv,  restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv, totalTv;
+    TextView restaurantTitleTv,  restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv, totalTv, emptyProducts;
     ImageView restaurantImg, locationImg;
     ProgressBar progressBar;
     Button checkoutBtn;
     private float total = 0f;
     RestController restController;
-
     RecyclerView productsRV;
     RecyclerView.LayoutManager layoutManager;
     ProductAdapter adapter;
     Restaurant restaurant;
-    public ArrayList<Product> productsArrayList;
-
-    public ArrayList<Product> getProducts(){
-        productsArrayList = new ArrayList<>();
-
-        productsArrayList.add(new Product("Hamburger", 2f));
-        productsArrayList.add(new Product("Pizza", 4.3f));
-        productsArrayList.add(new Product("Calzone", 3.5f));
-        productsArrayList.add(new Product("Spaghetti", 6f));
-        productsArrayList.add(new Product("Bistecca alla Fiorentina", 12.5f));
-        productsArrayList.add(new Product("Carbonara", 7.5f));
-        productsArrayList.add(new Product("Insalata mista", 4.5f));
-        productsArrayList.add(new Product("Petto di pollo", 8f));
-        productsArrayList.add(new Product("Polenta", 5f));
-        productsArrayList.add(new Product("Verdure miste", 4f));
-
-        return productsArrayList;
-    }
+    public ArrayList<Product> productsArrayList = new ArrayList<>();
+    ProgressBar loadingProgressBar;
+    RelativeLayout restaurantWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +54,14 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         restaurantId = intent.getStringExtra("restaurant_id");
 
         layoutManager = new LinearLayoutManager(this);
-        adapter = new ProductAdapter(this, getProducts());
+        adapter = new ProductAdapter(this);
         adapter.setOnQuanityChangedListener(this);
 
         productsRV = findViewById(R.id.products_rv);
         productsRV.setLayoutManager(layoutManager);
         productsRV.setAdapter(adapter);
 
+        emptyProducts = findViewById(R.id.empty_products);
         restaurantTitleTv = findViewById(R.id.restaurant_name);
         restaurantAddressTv = findViewById(R.id.restaurant_address2);
         restaurantPhoneTv = findViewById(R.id.restaurant_phone2);
@@ -94,12 +71,12 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         totalTv = findViewById(R.id.total_tv);
         progressBar = findViewById(R.id.my_progressBar);
         checkoutBtn = findViewById(R.id.checkout_btn);
-
-        checkoutBtn.setOnClickListener(this);
+        restaurantWrapper = findViewById(R.id.restaurant_wrapper);
+        loadingProgressBar = findViewById(R.id.loading_progressbar);
 
         restController = new RestController(this);
         restController.getRequest(Restaurant.ENDPOINT.concat(restaurantId), this, this);
-
+        checkoutBtn.setOnClickListener(this);
         locationImg.setOnClickListener(this);
         restaurantPhoneTv.setOnClickListener(this);
     }
@@ -163,10 +140,16 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
             restaurantPhone = restaurant.getNumTelefono();
             restaurantMinPrice = restaurant.getImportoMin();
             restaurantImgSrc = restaurant.getImageUrl();
+            productsArrayList = restaurant.getProductsArrayList();
 
-            setTextViews(restaurantName,restaurantAddress, restaurantPhone, restaurantMinPrice,restaurantImgSrc);
+            setViews(restaurantName,restaurantAddress, restaurantPhone, restaurantMinPrice,restaurantImgSrc);
+            adapter.setData(productsArrayList);
 
-            Log.e("SHOPACTIVITY", response);
+            if(productsArrayList.size() == 0)
+                emptyProducts.setVisibility(View.VISIBLE);
+
+            loadingProgressBar.setVisibility(View.GONE);
+            restaurantWrapper.setVisibility(View.VISIBLE);
 
         } catch (JSONException je){
             Log.e("MAINACTIVITY", je.getMessage());
@@ -174,12 +157,13 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void setTextViews(String restaurantName, String restaurantAddress, String restaurantPhone, float restaurantMinPrice, String restaurantImgSrc){
+    public void setViews(String restaurantName, String restaurantAddress, String restaurantPhone, float restaurantMinPrice, String restaurantImgSrc){
         restaurantTitleTv.setText(restaurantName);
         restaurantAddressTv.setText(restaurantAddress);
         restaurantPhoneTv.setText(restaurantPhone);
         restaurantMinPriceTv.setText(String.valueOf(restaurantMinPrice));
         Glide.with(this).load(restaurantImgSrc).into(restaurantImg);
+
         progressBar.setMax((int)restaurantMinPrice*100);
     }
 }

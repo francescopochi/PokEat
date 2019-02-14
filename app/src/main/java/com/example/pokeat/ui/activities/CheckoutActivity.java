@@ -19,8 +19,8 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
 
     @Override
     public void onChange(int id) {
-        order.productsArrayList.remove(id);
-        totalTv.setText("" + order.calcolaTotale());
+        //order.productsArrayList.remove(id);
+        //totalTv.setText("" + order.calcolaTotale());
     }
 
     Intent intent;
@@ -30,7 +30,7 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
     RecyclerView ordersRV;
     private float total = 0f;
     ArrayList<Product> productsArrayList;
-    Order order = new Order(getProducts(), "McDonald's");
+    //Order order = new Order(getProducts(), "McDonald's");
 
 
     @Override
@@ -41,7 +41,7 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
         intent = getIntent();
 
         layoutManager = new LinearLayoutManager(this);
-        adapter = new OrderProductsAdapter(this, getProducts());
+        //adapter = new OrderProductsAdapter(this, getProducts());
         adapter.setOnTotalChangedListener(this);
 
         ordersRV = findViewById(R.id.orders_rv);
@@ -52,17 +52,7 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
         restaurantTitle = findViewById(R.id.restaurant_name_final);
         restaurantTitle.append(intent.getStringExtra("restaurant_name"));
 
-        totalTv.setText("" + order.calcolaTotale());
+        //totalTv.setText("" + order.calcolaTotale());
     }
 
-    private ArrayList<Product> getProducts(){
-        productsArrayList = new ArrayList<>();
-
-        productsArrayList.add(new Product("Hamburger", 2f,3));
-        productsArrayList.add(new Product("Pizza", 4.3f,1));
-        productsArrayList.add(new Product("Calzone", 3.5f,5));
-        productsArrayList.add(new Product("Spaghetti", 6f,2));
-
-        return productsArrayList;
-    }
 }

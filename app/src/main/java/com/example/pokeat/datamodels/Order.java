@@ -12,19 +12,6 @@ public class Order {
         this.restaurantName = restaurantName;
     }
 
-    public ArrayList<Product> getProducts(){
-        productsArrayList = new ArrayList<>();
-
-        productsArrayList.add(new Product("Hamburger", 2f));
-        productsArrayList.add(new Product("Pizza", 4.3f));
-        productsArrayList.add(new Product("Calzone", 3.5f));
-        productsArrayList.add(new Product("Spaghetti", 6f));
-        productsArrayList.add(new Product("Polenta", 5f));
-        productsArrayList.add(new Product("Verdure miste", 4f));
-
-        return productsArrayList;
-    }
-
     public String getRestaurant() {
         return restaurantName;
     }

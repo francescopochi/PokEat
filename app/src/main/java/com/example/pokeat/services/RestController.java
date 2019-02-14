@@ -9,8 +9,8 @@ import com.android.volley.toolbox.Volley;
 
 public class RestController {
 
-    private final static String BASE_URL = "https://4a517745.ngrok.io/api/";
-    private final static String VERSION = "v1/";
+    private final static String BASE_URL = "http://138.68.86.70/";
+    private final static String VERSION = "";
 
     private RequestQueue queue;
 
@@ -26,5 +26,6 @@ public class RestController {
                 );
         queue.add(request);
     }
+
 
   }

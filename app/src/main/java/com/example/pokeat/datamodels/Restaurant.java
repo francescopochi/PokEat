@@ -1,27 +1,19 @@
 package com.example.pokeat.datamodels;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class Restaurant {
 
-    private String nome;
-    private String indirizzo;
-    private String numTelefono;
-    private String imageUrl;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    private String id;
+    private String nome, indirizzo, numTelefono, imageUrl, id;
     private Float importoMin;
-    private ArrayList<Product> productArrayList;
+
+    public ArrayList<Product> getProductsArrayList() {
+        return productsArrayList;
+    }
+
+    private ArrayList<Product> productsArrayList = new ArrayList<>();
     public static final String ENDPOINT = "restaurants/";
 
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {
@@ -31,6 +23,11 @@ public class Restaurant {
         imageUrl = jsonRestaurant.getString("image_url");
         numTelefono = jsonRestaurant.getString("phone_number");
         id = jsonRestaurant.getString("id");
+
+        JSONArray jsonArray = jsonRestaurant.getJSONArray("products");
+        for(int i=0; i<jsonArray.length(); i++){
+            productsArrayList.add(new Product(jsonArray.getJSONObject(i)));
+        }
     }
 
 
@@ -72,6 +69,14 @@ public class Restaurant {
 
     public void setImportoMin(float importoMin) {
         this.importoMin = importoMin;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

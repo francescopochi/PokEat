@@ -1,20 +1,18 @@
 package com.example.pokeat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Product {
 
-    private String nome;
+    private String nome, productImgUrl;
     private float prezzo;
     private int quantita = 0;
 
-    public Product(String nome, float prezzo, int quantita) {
-        this.nome = nome;
-        this.prezzo = prezzo;
-        this.quantita = quantita;
-    }
-
-    public Product(String nome, float prezzo) {
-        this.nome = nome;
-        this.prezzo = prezzo;
+    public Product(JSONObject jsonProduct) throws JSONException {
+        nome = jsonProduct.getString("name");
+        prezzo = Float.parseFloat(jsonProduct.getString("price"));
+        productImgUrl = jsonProduct.getString("image_url");
     }
 
     public String getNome() {

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     private RestController restController;
     private static final String preferencesFile = "com.example.pokeat.mypreferences", preferenceKEY = "view_mode";
     SharedPreferences sharedPreferences;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         restaurantRV = findViewById(R.id.places_rv);
+        progressBar = findViewById(R.id.loading_progressbar);
 
         // Otteniamo eventuali dati di preferences
         sharedPreferences = getSharedPreferences(preferencesFile, MODE_PRIVATE);
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.login_menu) {
             startActivity(new Intent(this, LoginActivity.class));
             return true;
@@ -104,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 restaurantsArrayList.add(restaurant);
             }
             adapter.setData(restaurantsArrayList);
+            progressBar.setVisibility(View.GONE);
+            restaurantRV.setVisibility(View.VISIBLE);
 
         } catch (JSONException je){
             Log.e("MAINACTIVITY", je.getMessage());

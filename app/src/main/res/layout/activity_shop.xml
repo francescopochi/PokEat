@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    >
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@id/loading_progressbar"
+        />
+
+    <RelativeLayout
+        android:id="@+id/restaurant_wrapper"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:visibility="gone">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -61,6 +77,17 @@
             android:layout_alignStart="@id/restaurant_address2"/>
     </RelativeLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_products"
+        android:text="@string/empty_products"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginStart="30dp"
+        android:textSize="20dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -141,8 +168,9 @@
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
 
+</RelativeLayout>
 
 
 

@@ -97,9 +97,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         public void onClick(View v) {
             if(v.getId() == R.id.vediMenu_btn){
                 Intent intent = new Intent(v.getContext(), ShopActivity.class);
-                intent.putExtra("restaurant_id",
-                        data.get(getAdapterPosition()).getId());
-
+                intent.putExtra("restaurant_id", data.get(getAdapterPosition()).getId());
                 v.getContext().startActivity(intent);
             }
         }

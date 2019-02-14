@@ -18,12 +18,15 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter{
     LayoutInflater inflater;
-
     private ArrayList<Product> data;
 
-    public ProductAdapter(Context context, ArrayList<Product> data) {
+    public ArrayList<Product> getData() {
+        return data;
+    }
+
+    public ProductAdapter(Context context) {
         inflater = LayoutInflater.from(context);
-        this.data = data;
+        this.data = new ArrayList<>();
     }
 
     public interface OnQuanityChangedListener {
@@ -60,6 +63,11 @@ public class ProductAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public void setData(ArrayList<Product> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
