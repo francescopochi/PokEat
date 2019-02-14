@@ -2,11 +2,27 @@ package com.example.pokeat.datamodels;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Restaurant {
 
-    private String nome, indirizzo, numTelefono, imageUrl, id;
+    private String nome;
+    private String indirizzo;
+    private String numTelefono;
+    private String imageUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private Float importoMin;
-    public static final String ENDPOINT = "restaurants";
+    private ArrayList<Product> productArrayList;
+    public static final String ENDPOINT = "restaurants/";
 
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {
         nome = jsonRestaurant.getString("name");
@@ -16,6 +32,7 @@ public class Restaurant {
         numTelefono = jsonRestaurant.getString("phone_number");
         id = jsonRestaurant.getString("id");
     }
+
 
     public String getImageUrl() {
         return imageUrl;

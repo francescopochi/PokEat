@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
+import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.adapters.ProductAdapter;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
 
@@ -32,23 +34,23 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ShopActivity extends AppCompatActivity implements View.OnClickListener, ProductAdapter.OnQuanityChangedListener {
+public class ShopActivity extends AppCompatActivity implements View.OnClickListener, ProductAdapter.OnQuanityChangedListener, Response.Listener<String>, Response.ErrorListener  {
 
     Intent intent;
-    String restaurantName, restaurantAddress, restaurantPhone, restaurantImgSrc;
+    String restaurantId, restaurantName, restaurantAddress, restaurantPhone, restaurantImgSrc;
     float restaurantMinPrice;
     TextView restaurantTitleTv,  restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv, totalTv;
     ImageView restaurantImg, locationImg;
     ProgressBar progressBar;
     Button checkoutBtn;
     private float total = 0f;
+    RestController restController;
 
     RecyclerView productsRV;
     RecyclerView.LayoutManager layoutManager;
     ProductAdapter adapter;
     Restaurant restaurant;
     public ArrayList<Product> productsArrayList;
-    int restaurant_id;
 
     public ArrayList<Product> getProducts(){
         productsArrayList = new ArrayList<>();
@@ -71,7 +73,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
         intent = getIntent();
+        restaurantId = intent.getStringExtra("restaurant_id");
 
         layoutManager = new LinearLayoutManager(this);
         adapter = new ProductAdapter(this, getProducts());
@@ -93,51 +97,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         checkoutBtn.setOnClickListener(this);
 
-        restaurant_id = intent.getIntExtra("restaurant_id", -1);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://5c642463c969210014a32e05.mockapi.io/api/v1/restaurant/" + (restaurant_id+1) + "";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, // HTTP request method
-                url,   // Destination
-                new Response.Listener<String>() {   // Listener for successful response
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("MAINACTIVIY", response);
-                        //Parsing
-                        try{
-                            JSONObject restaurantJSON = new JSONObject(response);
-                            restaurant= new Restaurant(restaurantJSON);
-
-                            restaurantPhone = restaurant.getNumTelefono();
-                            restaurantName = restaurant.getNome();
-                            restaurantMinPrice = restaurant.getImportoMin();
-                            restaurantAddress = restaurant.getIndirizzo();
-                            restaurantImgSrc = restaurant.getImageUrl();
-
-                            restaurantTitleTv.setText(restaurantName);
-                            restaurantAddressTv.setText(restaurantAddress);
-                            restaurantPhoneTv.setText(restaurantPhone);
-                            restaurantMinPriceTv.setText(String.valueOf(restaurantMinPrice));
-                            Glide.with(ShopActivity.this).load(restaurantImgSrc).into(restaurantImg);
-                            progressBar.setMax((int)(restaurantMinPrice)*100);
-                        } catch (JSONException e){
-                            Log.i("SHOPACTIVYTY", e.getMessage());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {  // Listener for error response
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("SHOPACTIVYTY", error.getMessage() + " " + error.networkResponse.statusCode);
-                    }
-                }
-        );
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        restController = new RestController(this);
+        restController.getRequest(Restaurant.ENDPOINT.concat(restaurantId), this, this);
 
         locationImg.setOnClickListener(this);
         restaurantPhoneTv.setOnClickListener(this);
@@ -184,5 +145,41 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     public void giveDirections(){
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+restaurantAddress));
         startActivity(intent);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("MAINACTIVITY", error.getMessage());
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            restaurant = new Restaurant(jsonObject);
+            restaurantName = restaurant.getNome();
+            restaurantAddress = restaurant.getIndirizzo();
+            restaurantPhone = restaurant.getNumTelefono();
+            restaurantMinPrice = restaurant.getImportoMin();
+            restaurantImgSrc = restaurant.getImageUrl();
+
+            setTextViews(restaurantName,restaurantAddress, restaurantPhone, restaurantMinPrice,restaurantImgSrc);
+
+            Log.e("SHOPACTIVITY", response);
+
+        } catch (JSONException je){
+            Log.e("MAINACTIVITY", je.getMessage());
+            Toast.makeText(this, je.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void setTextViews(String restaurantName, String restaurantAddress, String restaurantPhone, float restaurantMinPrice, String restaurantImgSrc){
+        restaurantTitleTv.setText(restaurantName);
+        restaurantAddressTv.setText(restaurantAddress);
+        restaurantPhoneTv.setText(restaurantPhone);
+        restaurantMinPriceTv.setText(String.valueOf(restaurantMinPrice));
+        Glide.with(this).load(restaurantImgSrc).into(restaurantImg);
+        progressBar.setMax((int)restaurantMinPrice*100);
     }
 }

@@ -1,5 +1,4 @@
 package com.example.pokeat.ui.activities;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -11,28 +10,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.request.Request;
 import com.example.pokeat.R;
-import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
@@ -123,12 +109,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             Log.e("MAINACTIVITY", je.getMessage());
             Toast.makeText(this, je.getMessage(), Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("MAINACTIVITY", error.getMessage());
+        //Log.e("MAINACTIVITY", error.getMessage());
         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
     }
 }
