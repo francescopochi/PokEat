@@ -1,17 +1,24 @@
 package com.example.pokeat.ui.activities;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.pokeat.R;
 import com.example.pokeat.Utils;
+import com.example.pokeat.datamodels.Restaurant;
+import com.example.pokeat.services.RestController;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edTxMail, edTxPassw;
     static final int PASSW_LEN = 6;
     static final String EMAIL_KEY = "email";
+    private RestController restController;
 
     @Override
     public void onClick(View v) {
