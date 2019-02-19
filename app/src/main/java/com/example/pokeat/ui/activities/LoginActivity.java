@@ -1,4 +1,5 @@
 package com.example.pokeat.ui.activities;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +16,16 @@ import com.android.volley.VolleyError;
 import com.example.pokeat.R;
 import com.example.pokeat.Utils;
 import com.example.pokeat.datamodels.Restaurant;
+import com.example.pokeat.datamodels.User;
 import com.example.pokeat.services.RestController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Response.ErrorListener, Response.Listener<String> {
 
     Button btnLogin, btnRegister;
     EditText edTxMail, edTxPassw;
@@ -59,10 +64,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
             }
         });
+
+        restController = new RestController(this);
     }
 
     public void doLogin() {
-
         String email = edTxMail.getText().toString();
         String password = edTxPassw.getText().toString();
 
@@ -76,10 +82,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         showToast(R.string.login_success);
+
+        Map<String,String> params = new HashMap<>();
+        params.put("identifier", email);
+        params.put("password", password);
+
+        restController.postRequest(User.LOGIN_ENDPOINT, params, this, this);
     }
 
     private void showToast(@StringRes int redId) {
         Toast.makeText(this, getString(redId), Toast.LENGTH_LONG).show();
     }
+    private void showToast(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onResponse(String response) {
+        Log.d("LOGINACTIVITY", response);
+        Intent intent = new Intent();
+        intent.putExtra("response", response);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("LOGINACTIVITY", error.getMessage());
+        showToast(error.getMessage());
+    }
 }
