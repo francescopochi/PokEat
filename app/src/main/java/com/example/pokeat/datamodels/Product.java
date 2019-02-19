@@ -39,15 +39,16 @@ public class Product {
         this.quantita = quantita;
     }
 
-    public void increaseQuantity(){
+    public void increaseQuantity() {
         this.quantita++;
     }
-    public void decreaseQuantity(){
-        if(quantita == 0) return;
+
+    public void decreaseQuantity() {
+        if (quantita == 0) return;
         this.quantita--;
     }
 
-    public float getSubtotal(){
+    public float getSubtotal() {
         return quantita * prezzo;
     }
 

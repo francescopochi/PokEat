@@ -1,7 +1,9 @@
 package com.example.pokeat.datamodels;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Restaurant {
@@ -19,13 +21,13 @@ public class Restaurant {
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {
         nome = jsonRestaurant.getString("name");
         indirizzo = jsonRestaurant.getString("address");
-        importoMin = (float)jsonRestaurant.getDouble("min_order");
+        importoMin = (float) jsonRestaurant.getDouble("min_order");
         imageUrl = jsonRestaurant.getString("image_url");
         numTelefono = jsonRestaurant.getString("phone_number");
         id = jsonRestaurant.getString("id");
 
         JSONArray jsonArray = jsonRestaurant.getJSONArray("products");
-        for(int i=0; i<jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             productsArrayList.add(new Product(jsonArray.getJSONObject(i)));
         }
     }

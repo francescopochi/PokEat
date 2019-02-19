@@ -1,4 +1,5 @@
 package com.example.pokeat.ui.activities;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +16,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.pokeat.R;
 import com.example.pokeat.Utils;
-import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.datamodels.User;
 import com.example.pokeat.services.RestController;
 
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,9 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        showToast(R.string.login_success);
-
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("identifier", email);
         params.put("password", password);
 
@@ -93,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void showToast(@StringRes int redId) {
         Toast.makeText(this, getString(redId), Toast.LENGTH_LONG).show();
     }
+
     private void showToast(String string) {
         Toast.makeText(this, string, Toast.LENGTH_LONG).show();
     }
@@ -100,15 +100,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onResponse(String response) {
         Log.d("LOGINACTIVITY", response);
+        showToast(R.string.login_success);
         Intent intent = new Intent();
-        intent.putExtra("response", response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            intent.putExtra("jwt", jsonObject.getString("jwt"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         setResult(Activity.RESULT_OK, intent);
         finish();
+
+
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("LOGINACTIVITY", error.getMessage());
-        showToast(error.getMessage());
+        String body;
+        JSONObject jsonobj;
+        if (error.networkResponse.data != null) {
+            try {
+                body = new String(error.networkResponse.data, "UTF-8");
+                jsonobj = new JSONObject(body);
+                Toast.makeText(this, jsonobj.getString("message"), Toast.LENGTH_LONG).show();
+            } catch (JSONException uex) {
+                uex.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

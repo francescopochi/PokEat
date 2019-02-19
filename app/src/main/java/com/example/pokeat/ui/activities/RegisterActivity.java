@@ -1,5 +1,5 @@
 package com.example.pokeat.ui.activities;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,11 +25,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,Response.Listener<String>, Response.ErrorListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<String>, Response.ErrorListener {
 
     EditText emailEdT, passwEdt, phoneEdt;
     Button regBtn;
-    private static final int PASSW_LENGTH = 6, PHONE_LENGTH = 10;
     private boolean isEmailValid, isPasswordValid, isPhoneValid;
     RestController restController;
 
@@ -37,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         restController = new RestController(this);
 
         emailEdT = findViewById(R.id.edTxMailRegistration);
@@ -45,10 +45,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         regBtn = findViewById(R.id.btn_registrazione2);
         regBtn.setOnClickListener(this);
 
-        // LISTENER PER EMAIL
+        // LISTENER PER EMAIL --------------------------------------------------------------
         emailEdT.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -62,10 +63,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         });
 
-        // LISTENER PER PASSWORD
+        // LISTENER PER PASSWORD -----------------------------------------------------------
         passwEdt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -79,10 +81,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         });
 
-        // LISTENER PER NUMERO DI TELEFONO
+        // LISTENER PER NUMERO DI TELEFONO -------------------------------------------------
         phoneEdt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -98,19 +101,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     // Metodo per abilitare o meno il bottone
-    private void enableButton(Button btn){
+    private void enableButton(Button btn) {
         btn.setEnabled(isEmailValid && isPhoneValid && isPasswordValid);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btn_registrazione2){
-            Map<String,String> params = new HashMap<>();
+        if (v.getId() == R.id.btn_registrazione2) {
+            Map<String, String> params = new HashMap<>();
             params.put("username", phoneEdt.getText().toString());
             params.put("email", emailEdT.getText().toString());
             params.put("password", passwEdt.getText().toString());
 
-            restController.postRequest(User.REGISTER_ENDPOINT, params, this,this);
+            restController.postRequest(User.REGISTER_ENDPOINT, params, this, this);
         }
     }
 
@@ -124,14 +127,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onResponse(String response) {
         Log.d("MAINACTIVITY", response);
 
-        try{
+        try {
             JSONObject responseJSON = new JSONObject(response);
             String accessToken = responseJSON.getString("jwt");
             SharedPreferencesUtils.putValue(this, User.ACCESS_TOKEN_KEY, accessToken);
 
             User user = new User(responseJSON.getJSONObject("user"), accessToken);
 
-        } catch (JSONException je){
+        } catch (JSONException je) {
             je.printStackTrace();
         }
     }

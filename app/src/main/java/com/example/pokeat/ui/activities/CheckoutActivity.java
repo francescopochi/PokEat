@@ -1,20 +1,18 @@
 package com.example.pokeat.ui.activities;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.example.pokeat.R;
-import com.example.pokeat.datamodels.Order;
 import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.ui.adapters.OrderProductsAdapter;
-import com.example.pokeat.ui.adapters.ProductAdapter;
 
 import java.util.ArrayList;
+
 public class CheckoutActivity extends AppCompatActivity implements OrderProductsAdapter.OnTotalChangedListener {
 
     @Override
@@ -30,7 +28,6 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
     RecyclerView ordersRV;
     private float total = 0f;
     ArrayList<Product> productsArrayList;
-    //Order order = new Order(getProducts(), "McDonald's");
 
 
     @Override
@@ -41,7 +38,6 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
         intent = getIntent();
 
         layoutManager = new LinearLayoutManager(this);
-        //adapter = new OrderProductsAdapter(this, getProducts());
         adapter.setOnTotalChangedListener(this);
 
         ordersRV = findViewById(R.id.orders_rv);
@@ -51,8 +47,6 @@ public class CheckoutActivity extends AppCompatActivity implements OrderProducts
 
         restaurantTitle = findViewById(R.id.restaurant_name_final);
         restaurantTitle.append(intent.getStringExtra("restaurant_name"));
-
-        //totalTv.setText("" + order.calcolaTotale());
     }
 
 }

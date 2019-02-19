@@ -1,10 +1,7 @@
 package com.example.pokeat.services;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,22 +17,22 @@ public class RestController {
 
     private RequestQueue queue;
 
-    public RestController(Context context){
+    public RestController(Context context) {
         queue = Volley.newRequestQueue(context);
     }
 
-    public void getRequest(String endpoint, Response.Listener<String> success, Response.ErrorListener error){
+    public void getRequest(String endpoint, Response.Listener<String> success, Response.ErrorListener error) {
         StringRequest request = new StringRequest(Request.Method.GET,
                 BASE_URL.concat(VERSION).concat(endpoint),
                 success,
                 error
-                );
+        );
         queue.add(request);
     }
 
-    public void postRequest(String endpoint, final Map<String,String> params, Response.Listener<String> success, Response.ErrorListener error){
+    public void postRequest(String endpoint, final Map<String, String> params, Response.Listener<String> success, Response.ErrorListener error) {
         String url = BASE_URL.concat(endpoint);
-        StringRequest request = new StringRequest(Request.Method.POST, url, success, error){
+        StringRequest request = new StringRequest(Request.Method.POST, url, success, error) {
             @Override
             protected Map<String, String> getParams() {
                 return params;
@@ -44,4 +41,4 @@ public class RestController {
         queue.add(request);
     }
 
-  }
+}

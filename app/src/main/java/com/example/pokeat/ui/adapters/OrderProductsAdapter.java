@@ -1,23 +1,22 @@
 package com.example.pokeat.ui.adapters;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
-import com.example.pokeat.ui.activities.CheckoutActivity;
-import com.example.pokeat.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 
-public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.OrderProductViewHolder>{
+public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.OrderProductViewHolder> {
 
     private ArrayList<Product> dataSet;
     private Context context;
@@ -25,12 +24,12 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public static float amountToRemove = 0f;
     private float total = 0f;
 
-    public  OrderProductsAdapter(Context context, ArrayList<Product> dataSet){
+    public OrderProductsAdapter(Context context, ArrayList<Product> dataSet) {
         this.dataSet = dataSet;
         this.context = context;
         inflater = LayoutInflater.from(context);
 
-        for(int i=0; i<dataSet.size(); i++){
+        for (int i = 0; i < dataSet.size(); i++) {
             total += dataSet.get(i).getSubtotal();
         }
     }
@@ -53,7 +52,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     @NonNull
     @Override
     public OrderProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new OrderProductViewHolder(inflater.inflate(R.layout.item_order,viewGroup,false));
+        return new OrderProductViewHolder(inflater.inflate(R.layout.item_order, viewGroup, false));
     }
 
     @Override
@@ -71,9 +70,9 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         return dataSet.size();
     }
 
-    public class OrderProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class OrderProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView quantityTv,productNameTv,subtotalTv;
+        public TextView quantityTv, productNameTv, subtotalTv;
         public ImageButton removeBtn;
 
         public OrderProductViewHolder(@NonNull View itemView) {

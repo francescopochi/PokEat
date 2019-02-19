@@ -7,6 +7,12 @@
         android:title="@string/login"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/logout_menu"
+        android:title="@string/logout"
+        app:showAsAction="always"
+        android:visible="false"
+        />
 
     <item android:id="@+id/view_mode"
         app:showAsAction="always"

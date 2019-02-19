@@ -1,4 +1,5 @@
 package com.example.pokeat.datamodels;
+
 import java.util.ArrayList;
 
 public class Order {
@@ -7,7 +8,7 @@ public class Order {
     public ArrayList<Product> productsArrayList;
     private float total;
 
-    public Order(ArrayList<Product> products, String restaurantName){
+    public Order(ArrayList<Product> products, String restaurantName) {
         this.productsArrayList = products;
         this.restaurantName = restaurantName;
     }
@@ -28,9 +29,9 @@ public class Order {
         this.total = total;
     }
 
-    public float calcolaTotale(){
+    public float calcolaTotale() {
         total = 0;
-        for(Product elem : productsArrayList){
+        for (Product elem : productsArrayList) {
             total += elem.getSubtotal();
         }
 

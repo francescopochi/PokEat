@@ -1,6 +1,6 @@
 package com.example.pokeat.ui.adapters;
+
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +12,10 @@ import android.widget.Toast;
 
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
-import com.example.pokeat.ui.activities.ShopActivity;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter{
+public class ProductAdapter extends RecyclerView.Adapter {
     LayoutInflater inflater;
     private ArrayList<Product> data;
 
@@ -70,7 +69,7 @@ public class ProductAdapter extends RecyclerView.Adapter{
         notifyDataSetChanged();
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+    public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView foodName, foodPrice, foodQuantity;
         public Button plusBtn, minusBtn;
@@ -97,7 +96,7 @@ public class ProductAdapter extends RecyclerView.Adapter{
                 onQuanityChangedListener.onChange(product.getPrezzo());
             } else if (view.getId() == R.id.quantityMinus_btn) {
 
-                if(product.getQuantita()>0){
+                if (product.getQuantita() > 0) {
                     product.decreaseQuantity();
                     notifyItemChanged(getAdapterPosition());
                     onQuanityChangedListener.onChange(product.getPrezzo() * -1);

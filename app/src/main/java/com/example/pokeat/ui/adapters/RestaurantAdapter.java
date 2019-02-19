@@ -1,11 +1,9 @@
 package com.example.pokeat.ui.adapters;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +13,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
-import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
-import com.example.pokeat.ui.activities.LoginActivity;
-import com.example.pokeat.ui.activities.RegisterActivity;
 import com.example.pokeat.ui.activities.ShopActivity;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class RestaurantAdapter extends RecyclerView.Adapter{
+public class RestaurantAdapter extends RecyclerView.Adapter {
     LayoutInflater inflater;
 
     private ArrayList<Restaurant> data;
@@ -34,7 +28,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         return isGrid;
     }
 
-    public static void setGrid(boolean isGrid){
+    public static void setGrid(boolean isGrid) {
         RestaurantAdapter.isGrid = isGrid;
     }
 
@@ -42,7 +36,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         isGrid = !isGrid;
     }
 
-    public RestaurantAdapter(Context context){
+    public RestaurantAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.data = new ArrayList<>();
     }
@@ -76,7 +70,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
         notifyDataSetChanged(); // notifichiamo all'adapter che è cambiato il dataset
     }
 
-    public class RestaurantViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
+    public class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView restaurantName, restaurantAddress, restaurantMinPrice, restaurantPhone;
         public ImageView restaurantImage;
@@ -95,7 +89,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter{
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.vediMenu_btn){
+            if (v.getId() == R.id.vediMenu_btn) {
                 Intent intent = new Intent(v.getContext(), ShopActivity.class);
                 intent.putExtra("restaurant_id", data.get(getAdapterPosition()).getId());
                 v.getContext().startActivity(intent);
