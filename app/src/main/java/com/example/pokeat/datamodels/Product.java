@@ -15,6 +15,17 @@ public class Product {
         productImgUrl = jsonProduct.getString("image_url");
     }
 
+    public Product(String nome, float prezzo, int quantita){
+        this.nome = nome;
+        this.prezzo = prezzo;
+        this.quantita = quantita;
+    }
+
+    public Product(String nome, float prezzo){
+        this.nome = nome;
+        this.prezzo = prezzo;
+    }
+
     public String getNome() {
         return nome;
     }

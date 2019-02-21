@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.pokeat.ui.activities.CheckoutActivity"></activity>
         <activity android:name="com.example.pokeat.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.pokeat.ui.activities.RegisterActivity" />
+        <activity android:name=".ui.activities.CheckoutActivity"/>
     </application>
 
 </manifest>

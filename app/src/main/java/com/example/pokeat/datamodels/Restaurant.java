@@ -10,13 +10,12 @@ public class Restaurant {
 
     private String nome, indirizzo, numTelefono, imageUrl, id;
     private Float importoMin;
+    private ArrayList<Product> productsArrayList = new ArrayList<>();
+    public static final String ENDPOINT = "restaurants/";
 
     public ArrayList<Product> getProductsArrayList() {
         return productsArrayList;
     }
-
-    private ArrayList<Product> productsArrayList = new ArrayList<>();
-    public static final String ENDPOINT = "restaurants/";
 
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {
         nome = jsonRestaurant.getString("name");
@@ -32,6 +31,12 @@ public class Restaurant {
         }
     }
 
+    public Restaurant(String nome, String indirizzo, float importoMin) {
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.importoMin = importoMin;
+        productsArrayList = new ArrayList<>();
+    }
 
     public String getImageUrl() {
         return imageUrl;

@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import com.example.pokeat.R;
 import com.example.pokeat.Utils;
 import com.example.pokeat.datamodels.User;
 import com.example.pokeat.services.RestController;
+import com.example.pokeat.ui.SharedPreferencesUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     static final int PASSW_LEN = 6;
     static final String EMAIL_KEY = "email";
     private RestController restController;
+    Menu menu;
 
     @Override
     public void onClick(View v) {
@@ -105,14 +109,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             JSONObject jsonObject = new JSONObject(response);
             intent.putExtra("jwt", jsonObject.getString("jwt"));
+
+            SharedPreferencesUtils.putValue(this, "jwt", jsonObject.getString("jwt"));
+            menu = MainActivity.menu;
+            menu.findItem(R.id.login_menu).setVisible(false);
+            menu.findItem(R.id.logout_menu).setVisible(true);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         setResult(Activity.RESULT_OK, intent);
         finish();
-
-
     }
 
     @Override

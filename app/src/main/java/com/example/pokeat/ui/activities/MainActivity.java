@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.pokeat.R;
@@ -24,10 +23,8 @@ import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.SharedPreferencesUtils;
 import com.example.pokeat.ui.adapters.RestaurantAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     private static final int LOGIN_REQUEST_CODE = 3001;
     SharedPreferences sharedPreferences;
     ProgressBar progressBar;
-    Menu menu;
+    static public Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             SharedPreferencesUtils.putValue(MainActivity.this, "jwt", null);
             item.setVisible(false);
             menu.findItem(R.id.login_menu).setVisible(true);
+            Toast.makeText(this,"Logout effettuato", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -144,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            SharedPreferencesUtils.putValue(this, "jwt", data.getStringExtra("jwt"));
             menu.findItem(R.id.login_menu).setVisible(false);
             menu.findItem(R.id.logout_menu).setVisible(true);
         }
     }
 }
+

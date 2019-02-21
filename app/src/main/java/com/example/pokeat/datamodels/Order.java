@@ -1,24 +1,26 @@
 package com.example.pokeat.datamodels;
-
 import java.util.ArrayList;
 
 public class Order {
 
-    private String restaurantName;
-    public ArrayList<Product> productsArrayList;
-    private float total;
+    private Restaurant restaurant;
+    private ArrayList<Product> products;
+    private float total = 0f;
 
-    public Order(ArrayList<Product> products, String restaurantName) {
-        this.productsArrayList = products;
-        this.restaurantName = restaurantName;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public String getRestaurant() {
-        return restaurantName;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
-    public void setRestaurant(String restaurantName) {
-        this.restaurantName = restaurantName;
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     public float getTotal() {
@@ -27,14 +29,5 @@ public class Order {
 
     public void setTotal(float total) {
         this.total = total;
-    }
-
-    public float calcolaTotale() {
-        total = 0;
-        for (Product elem : productsArrayList) {
-            total += elem.getSubtotal();
-        }
-
-        return total;
     }
 }

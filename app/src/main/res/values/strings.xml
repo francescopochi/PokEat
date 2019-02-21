@@ -18,7 +18,7 @@
     <string name="restaurant_list">Elenco ristoranti</string>
     <string name="checkout_title">Riepilogo ordine</string>
     <string name="menu">Vedi menu</string>
-    <string name="checkout_total">Totale: </string>
+    <string name="checkout_total">Totale: €</string>
     <string name="importo_minimo">Importo minimo: </string>
     <string name="eur">€</string>
     <string name="proceed_payment">PROCEDI COL PAGAMENTO</string>
