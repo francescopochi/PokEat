@@ -1,6 +1,7 @@
 package com.example.pokeat.ui.adapters;
 
 import android.content.Context;
+import android.net.sip.SipSession;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter {
     LayoutInflater inflater;
@@ -68,6 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter {
         this.data = data;
         notifyDataSetChanged();
     }
+
 
     public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

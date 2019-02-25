@@ -1,4 +1,8 @@
 package com.example.pokeat.datamodels;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,11 +10,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+@Entity(tableName = "restaurant")
 public class Restaurant {
 
-    private String nome, indirizzo, numTelefono, imageUrl, id;
+    @ColumnInfo(name = "name")
+    private String nome;
+
+    @ColumnInfo(name = "address")
+    private String indirizzo;
+
+    @ColumnInfo(name = "num_telefono")
+    private String numTelefono;
+
+    @ColumnInfo(name = "image_url")
+    private String imageUrl;
+
+    @ColumnInfo(name = "restaurant_id")
+    private String id;
+
+    @ColumnInfo(name = "minimum_order")
     private Float importoMin;
+
+    @Ignore
     private ArrayList<Product> productsArrayList = new ArrayList<>();
+
     public static final String ENDPOINT = "restaurants/";
 
     public ArrayList<Product> getProductsArrayList() {

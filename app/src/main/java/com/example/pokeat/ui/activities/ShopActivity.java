@@ -3,8 +3,11 @@ package com.example.pokeat.ui.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.example.pokeat.R;
+import com.example.pokeat.datamodels.Order;
 import com.example.pokeat.datamodels.Product;
 import com.example.pokeat.datamodels.Restaurant;
+import com.example.pokeat.services.AppDatabase;
 import com.example.pokeat.services.RestController;
 import com.example.pokeat.ui.SharedPreferencesUtils;
 import com.example.pokeat.ui.adapters.ProductAdapter;
@@ -31,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener, ProductAdapter.OnQuanityChangedListener, Response.Listener<String>, Response.ErrorListener {
 
@@ -39,7 +45,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     float restaurantMinPrice;
     TextView restaurantTitleTv, restaurantAddressTv, restaurantPhoneTv, restaurantMinPriceTv, totalTv, emptyProducts;
     ImageView restaurantImg, locationImg;
-    ProgressBar progressBar;
+    ProgressBar progressBar, loadingProgressBar;
     Button checkoutBtn;
     private float total = 0f;
     RestController restController;
@@ -48,7 +54,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     ProductAdapter adapter;
     Restaurant restaurant;
     public ArrayList<Product> productsArrayList = new ArrayList<>();
-    ProgressBar loadingProgressBar;
     RelativeLayout restaurantWrapper;
     private static final int LOGIN_FOR_CHECKOUT_REQUEST_CODE = 3000;
 
@@ -93,6 +98,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.position_img) {
             giveDirections();
         } else if (v.getId() == R.id.checkout_btn) {
+
+            new SaveOrder().execute();
 
             String jwt = SharedPreferencesUtils.getStringValue(this, "jwt");
             if (jwt != null) {
@@ -191,4 +198,33 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         progressBar.setMax((int) restaurantMinPrice * 100);
     }
+
+    class SaveOrder extends AsyncTask<Void, Void, Void> {
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Order order = new Order();
+            order.setTotal(total);
+            order.setRestaurant(restaurant);
+
+            List<Product> selected = adapter.getData();
+            selected.removeIf(product -> product.getQuantita() < 1);
+            order.setProducts(selected);
+
+            AppDatabase dbInstance = AppDatabase.getAppDatabase(ShopActivity.this);
+            dbInstance.orderDao().insert(order);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent intent = new Intent(ShopActivity.this, CheckoutActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }
+
+

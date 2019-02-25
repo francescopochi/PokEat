@@ -1,21 +1,22 @@
 package com.example.pokeat.ui.activities;
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.pokeat.R;
 import com.example.pokeat.datamodels.Order;
 import com.example.pokeat.datamodels.Product;
-import com.example.pokeat.datamodels.Restaurant;
 import com.example.pokeat.ui.adapters.OrderProductsAdapter;
+
 import java.util.ArrayList;
 
-public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener, OrderProductsAdapter.onItemRemovedListener{
+public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener, OrderProductsAdapter.onItemRemovedListener {
 
     private TextView restaturantTv, totalTv;
     private RecyclerView productRv;
@@ -52,16 +53,16 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         bindData();
     }
 
-    private void bindData(){
+    private void bindData() {
         restaturantTv.setText(restaurantName);
         totalTv.setText(String.valueOf(order.getTotal()));
     }
 
-    private Order getOrder(){
-        Order order =  new Order();
+    private Order getOrder() {
+        Order order = new Order();
         order.setProducts(getProducts());
 
-        for(int i=0; i<getProducts().size(); i++){
+        for (int i = 0; i < getProducts().size(); i++) {
             total += getProducts().get(i).getSubtotal();
         }
 
@@ -72,15 +73,15 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
     private ArrayList<Product> getProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("McMenu", 7,1));
-        products.add(new Product("Hamburger", 4,2));
-        products.add(new Product("Insalata", 2,1));
+        products.add(new Product("McMenu", 7, 1));
+        products.add(new Product("Hamburger", 4, 2));
+        products.add(new Product("Insalata", 2, 1));
         return products;
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.pay_btn){
+        if (view.getId() == R.id.pay_btn) {
             /* effettuare post :
             restaurant: <id>
             user : <id>
@@ -96,10 +97,10 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void updateTotal(float subtotal) {
-        if(total == 0)
+        if (total == 0)
             return;
 
-        total -=subtotal;
+        total -= subtotal;
         totalTv.setText(String.valueOf(total));
     }
 }
